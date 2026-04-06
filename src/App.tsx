@@ -19,7 +19,8 @@ import {
   Trash2,
   Edit3,
   Moon,
-  Sun
+  Sun,
+  Activity
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { GoogleGenAI } from "@google/genai";
@@ -91,10 +92,10 @@ const Sidebar = ({ activeTab, setActiveTab, user, onSignOut }: { activeTab: stri
   return (
     <div className="w-20 lg:w-64 bg-surface border-r border-slate-200 flex flex-col h-screen fixed left-0 top-0 z-50 transition-all">
       <div className="p-6 flex items-center gap-3">
-        <div className="w-8 h-8 bg-gradient-to-br from-brand-blue to-brand-blue-dark rounded-lg flex items-center justify-center">
-          <Sparkles className="text-white w-5 h-5" />
+        <div className="w-8 h-8 bg-brand-gradient rounded-lg flex items-center justify-center shadow-sm">
+          <Activity className="text-white w-5 h-5" />
         </div>
-        <h1 className="text-lg font-bold tracking-tight text-text-primary hidden lg:block">LookoutPost</h1>
+        <h1 className="text-lg font-bold tracking-tight text-text-primary hidden lg:block">VibePulse</h1>
       </div>
 
       <nav className="flex-1 px-4 py-8 space-y-2">
@@ -104,7 +105,7 @@ const Sidebar = ({ activeTab, setActiveTab, user, onSignOut }: { activeTab: stri
             onClick={() => setActiveTab(item.id)}
             className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-300 ${
               activeTab === item.id 
-                ? 'bg-surface-hover text-brand-blue' 
+                ? 'bg-surface-hover text-brand-primary' 
                 : 'text-text-muted hover:text-text-primary'
             }`}
           >
@@ -212,7 +213,7 @@ const PostComposer = ({ onPostCreated, token }: { onPostCreated: (post: Post) =>
     <div className="max-w-4xl space-y-12">
       <div className="bg-surface rounded-3xl p-8 border border-slate-200 shadow-sm">
         <h2 className="text-xl font-bold mb-8 flex items-center gap-2 text-text-primary">
-          <Edit3 className="text-brand-blue" />
+          <Edit3 className="text-brand-primary" />
           Compose New Post
         </h2>
 
@@ -226,12 +227,12 @@ const PostComposer = ({ onPostCreated, token }: { onPostCreated: (post: Post) =>
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="What should the post be about?"
-                className="flex-1 bg-bg-main border border-slate-200 rounded-xl px-4 py-3 text-sm text-text-primary focus:outline-none focus:border-brand-blue transition-all"
+                className="flex-1 bg-bg-main border border-slate-200 rounded-xl px-4 py-3 text-sm text-text-primary focus:outline-none focus:border-brand-primary transition-all"
               />
               <button 
                 onClick={generateAIContent}
                 disabled={isGenerating || !prompt}
-                className="bg-brand-blue hover:bg-brand-blue-dark disabled:opacity-50 text-white px-6 py-3 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-lg shadow-brand-blue/10"
+                className="bg-brand-primary hover:bg-brand-primary/90 disabled:opacity-50 text-white px-6 py-3 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-lg shadow-brand-primary/10"
               >
                 {isGenerating ? 'Generating...' : <><Sparkles size={16} /> Generate</>}
               </button>
@@ -260,7 +261,7 @@ const PostComposer = ({ onPostCreated, token }: { onPostCreated: (post: Post) =>
                   onClick={() => togglePlatform(p.id as Platform)}
                   className={`p-4 rounded-2xl border transition-all ${
                     platforms.includes(p.id as Platform)
-                      ? 'bg-brand-blue/10 border-brand-blue text-brand-blue shadow-sm'
+                      ? 'bg-brand-primary/10 border-brand-primary text-brand-primary shadow-sm'
                       : 'bg-bg-main border-slate-200 text-text-muted ' + p.color
                   }`}
                 >
@@ -286,7 +287,7 @@ const PostComposer = ({ onPostCreated, token }: { onPostCreated: (post: Post) =>
             <button 
               onClick={handleCreate}
               disabled={!content || platforms.length === 0}
-              className="bg-gradient-to-r from-brand-blue to-brand-blue-dark hover:opacity-90 disabled:opacity-50 text-white px-10 py-4 rounded-2xl font-bold shadow-xl shadow-brand-blue/10 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+              className="bg-brand-gradient hover:opacity-90 disabled:opacity-50 text-white px-10 py-4 rounded-2xl font-bold shadow-xl shadow-brand-primary/10 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
             >
               {scheduledDate ? 'Schedule Post' : 'Post Now'}
             </button>
@@ -315,10 +316,10 @@ const Dashboard = ({ posts, token }: { posts: Post[], token: string }) => {
   }, [token]);
 
   const stats = [
-    { label: 'Total Posts', value: dashboardStats.totalPosts, icon: Send, color: 'text-brand-blue' },
-    { label: 'Impressions', value: dashboardStats.totalImpressions.toLocaleString(), icon: Sparkles, color: 'text-accent-blue' },
-    { label: 'Engagements', value: dashboardStats.totalEngagements.toLocaleString(), icon: CheckCircle2, color: 'text-brand-blue' },
-    { label: 'Eng. Rate', value: dashboardStats.avgEngagementRate, icon: Sparkles, color: 'text-brand-blue' },
+    { label: 'Total Posts', value: dashboardStats.totalPosts, icon: Send, color: 'text-brand-primary' },
+    { label: 'Impressions', value: dashboardStats.totalImpressions.toLocaleString(), icon: Sparkles, color: 'text-brand-secondary' },
+    { label: 'Engagements', value: dashboardStats.totalEngagements.toLocaleString(), icon: CheckCircle2, color: 'text-brand-primary' },
+    { label: 'Eng. Rate', value: dashboardStats.avgEngagementRate, icon: Sparkles, color: 'text-brand-primary' },
   ];
 
   return (
@@ -344,7 +345,7 @@ const Dashboard = ({ posts, token }: { posts: Post[], token: string }) => {
                 <div className="flex items-center gap-4 mb-3">
                   <div className="flex gap-1">
                     {post.platforms.map(p => (
-                      <div key={p} className="text-text-muted group-hover:text-brand-blue transition-colors">
+                      <div key={p} className="text-text-muted group-hover:text-brand-primary transition-colors">
                         {p === 'linkedin' && <Linkedin size={14} />}
                         {p === 'x' && <Twitter size={14} />}
                         {p === 'facebook' && <Facebook size={14} />}
@@ -376,13 +377,13 @@ const Dashboard = ({ posts, token }: { posts: Post[], token: string }) => {
                   contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '10px', color: '#0f172a' }}
                   itemStyle={{ color: '#0f172a' }}
                 />
-                <Line type="monotone" dataKey="v" stroke="#0ea5e9" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="v" stroke="#7c3aed" strokeWidth={2} dot={false} />
               </LineChart>
             </ResponsiveContainer>
           </div>
           <div className="bg-surface p-6 rounded-2xl border border-slate-200">
             <p className="text-xs text-text-muted leading-relaxed">
-              Your engagement is up <span className="text-brand-blue">24%</span> compared to last week. 
+              Your engagement is up <span className="text-brand-primary">24%</span> compared to last week. 
               The best time to post remains <span className="text-text-primary">Tuesday at 10:00 AM</span>.
             </p>
           </div>
@@ -446,9 +447,9 @@ const SocialAccounts = ({ token, onRefresh }: { token: string, onRefresh: () => 
 
       <div className="grid grid-cols-1 gap-4">
         {accounts.map((acc) => (
-          <div key={acc.id} className="bg-surface p-6 rounded-2xl border border-slate-200 flex items-center gap-6 hover:border-brand-blue/30 transition-all group">
+          <div key={acc.id} className="bg-surface p-6 rounded-2xl border border-slate-200 flex items-center gap-6 hover:border-brand-primary/30 transition-all group">
             <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-              acc.connected ? 'bg-blue-500/10 text-brand-blue' : 'bg-slate-100 text-text-muted'
+              acc.connected ? 'bg-brand-primary/10 text-brand-primary' : 'bg-slate-100 text-text-muted'
             }`}>
               {acc.id === 'linkedin' && <Linkedin size={24} />}
               {acc.id === 'x' && <Twitter size={24} />}
@@ -465,7 +466,7 @@ const SocialAccounts = ({ token, onRefresh }: { token: string, onRefresh: () => 
               className={`px-6 py-2 rounded-full text-xs font-bold tracking-widest uppercase transition-all ${
               acc.connected 
                 ? 'border border-slate-200 text-text-muted hover:text-red-500 hover:border-red-500/30' 
-                : 'bg-brand-blue text-white hover:bg-brand-blue-dark'
+                : 'bg-brand-primary text-white hover:bg-brand-primary/90'
             }`}>
               {acc.connected ? 'Disconnect' : 'Connect'}
             </button>
@@ -560,10 +561,10 @@ const AuthScreen = ({ onAuthSuccess, onBack, darkMode, setDarkMode }: { onAuthSu
         className="max-w-md w-full bg-surface rounded-3xl shadow-xl border border-slate-200 dark:border-slate-800 p-10"
       >
         <div className="text-center mb-10">
-          <div className="w-12 h-12 bg-gradient-to-br from-brand-blue to-brand-blue-dark rounded-xl flex items-center justify-center mx-auto mb-4">
-            <Sparkles className="text-white w-6 h-6" />
+          <div className="w-12 h-12 bg-brand-gradient rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-brand-primary/20">
+            <Activity className="text-white w-6 h-6" />
           </div>
-          <h2 className="text-3xl font-bold text-text-primary">{isLogin ? 'Welcome Back' : 'Join LookoutPost'}</h2>
+          <h2 className="text-3xl font-bold text-text-primary">{isLogin ? 'Welcome Back' : 'Join VibePulse'}</h2>
           <p className="text-text-muted mt-2">{isLogin ? 'Log in to manage your vibes' : 'Start your journey with us today'}</p>
         </div>
 
@@ -613,7 +614,7 @@ const AuthScreen = ({ onAuthSuccess, onBack, darkMode, setDarkMode }: { onAuthSu
           <button 
             type="submit"
             disabled={isLoading}
-            className="w-full bg-brand-blue hover:bg-brand-blue-dark disabled:opacity-50 text-white font-bold py-4 rounded-xl shadow-lg shadow-brand-blue/10 transition-all mt-4"
+            className="w-full bg-brand-primary hover:bg-brand-primary/90 disabled:opacity-50 text-white font-bold py-4 rounded-xl shadow-lg shadow-brand-primary/10 transition-all mt-4"
           >
             {isLoading ? 'Processing...' : (isLogin ? 'Log In' : 'Create Account')}
           </button>
@@ -652,21 +653,21 @@ const LandingPage = ({ onStart, onLogin, darkMode, setDarkMode }: { onStart: () 
       {/* Navigation */}
       <nav className="flex items-center justify-between px-8 py-4 border-b border-slate-200 dark:border-slate-800">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-brand-blue to-brand-blue-dark rounded-lg flex items-center justify-center shadow-sm">
-            <Sparkles className="text-white w-5 h-5" />
+          <div className="w-8 h-8 bg-brand-gradient rounded-lg flex items-center justify-center shadow-sm">
+            <Activity className="text-white w-5 h-5" />
           </div>
-          <span className="text-xl font-bold text-text-primary">LookoutPost</span>
+          <span className="text-xl font-bold text-text-primary">VibePulse</span>
         </div>
         <div className="flex items-center gap-4">
           <button 
             onClick={() => setDarkMode(!darkMode)}
-            className="p-2 rounded-lg bg-surface border border-slate-200 dark:border-slate-700 text-text-muted hover:text-brand-blue transition-all"
+            className="p-2 rounded-lg bg-surface border border-slate-200 dark:border-slate-700 text-text-muted hover:text-brand-primary transition-all"
           >
             {darkMode ? <Sun size={18} /> : <Moon size={18} />}
           </button>
           <button 
             onClick={onLogin}
-            className="bg-brand-blue hover:bg-brand-blue-dark text-white px-6 py-2 rounded-lg text-sm font-medium transition-all"
+            className="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all shadow-sm"
           >
             Log In
           </button>
@@ -677,7 +678,7 @@ const LandingPage = ({ onStart, onLogin, darkMode, setDarkMode }: { onStart: () 
       <section className="max-w-5xl mx-auto px-6 pt-24 pb-32 text-center">
         <h1 className="text-5xl md:text-7xl font-bold text-text-primary mb-6 tracking-tight">
           Personal Vibe Marketing<br />
-          <span className="bg-gradient-to-r from-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
+          <span className="bg-brand-gradient bg-clip-text text-transparent">
             Automation Platform
           </span>
         </h1>
@@ -686,7 +687,7 @@ const LandingPage = ({ onStart, onLogin, darkMode, setDarkMode }: { onStart: () 
         </p>
         <button 
           onClick={onStart}
-          className="bg-gradient-to-r from-brand-blue to-brand-blue-dark hover:opacity-90 text-white px-10 py-4 rounded-xl text-lg font-bold shadow-xl shadow-brand-blue/20 transition-all transform hover:-translate-y-1"
+          className="bg-brand-gradient hover:opacity-90 text-white px-10 py-4 rounded-xl text-lg font-bold shadow-xl shadow-brand-primary/20 transition-all transform hover:-translate-y-1"
         >
           Get Started Free
         </button>
@@ -793,7 +794,7 @@ const AdminPanel = ({ token }: { token: string }) => {
                   </td>
                   <td className="px-8 py-4 text-sm text-text-muted">{u.email}</td>
                   <td className="px-8 py-4">
-                    <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${u.role === 'admin' ? 'bg-brand-blue/10 text-brand-blue' : 'bg-slate-100 text-text-muted'}`}>
+                    <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${u.role === 'admin' ? 'bg-brand-primary/10 text-brand-primary' : 'bg-slate-100 text-text-muted'}`}>
                       {u.role}
                     </span>
                   </td>
@@ -817,10 +818,10 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('lookout_dark_mode') === 'true' || 
-             window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const saved = localStorage.getItem('lookout_dark_mode');
+      if (saved !== null) return saved === 'true';
     }
-    return false;
+    return false; // Default to light theme
   });
 
   useEffect(() => {
@@ -891,7 +892,7 @@ export default function App() {
   if (isLoading) {
     return (
       <div className={`min-h-screen bg-bg-main flex items-center justify-center ${darkMode ? 'dark' : ''}`}>
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-blue"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-primary"></div>
       </div>
     );
   }
@@ -922,11 +923,11 @@ export default function App() {
         <header className="flex items-center justify-between mb-16">
           <div>
             <h2 className="text-4xl font-light tracking-tight text-text-primary">{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</h2>
-            <p className="text-text-muted mt-2 font-mono text-xs uppercase tracking-widest">LookoutPost / {activeTab}</p>
+            <p className="text-text-muted mt-2 font-mono text-xs uppercase tracking-widest">VibePulse / {activeTab}</p>
           </div>
           <button 
             onClick={() => setDarkMode(!darkMode)}
-            className="p-3 rounded-xl bg-surface border border-slate-200 dark:border-slate-700 text-text-muted hover:text-brand-blue transition-all"
+            className="p-3 rounded-xl bg-surface border border-slate-200 dark:border-slate-700 text-text-muted hover:text-brand-primary transition-all"
           >
             {darkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
