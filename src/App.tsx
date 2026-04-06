@@ -647,11 +647,72 @@ const AuthScreen = ({ onAuthSuccess, onBack, darkMode, setDarkMode }: { onAuthSu
   );
 };
 
+const BackgroundBubbles = () => {
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+      <motion.div
+        animate={{
+          x: [0, 100, 0],
+          y: [0, 50, 0],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+        className="absolute -top-20 -left-20 w-96 h-96 bg-brand-primary/5 rounded-full blur-3xl"
+      />
+      <motion.div
+        animate={{
+          x: [0, -150, 0],
+          y: [0, 100, 0],
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+        className="absolute top-1/4 -right-20 w-80 h-80 bg-brand-secondary/5 rounded-full blur-3xl"
+      />
+      <motion.div
+        animate={{
+          x: [0, 80, 0],
+          y: [0, -120, 0],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 22,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+        className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-brand-primary/5 rounded-full blur-3xl"
+      />
+      <motion.div
+        animate={{
+          x: [0, -100, 0],
+          y: [0, 80, 0],
+          scale: [1, 1.3, 1],
+        }}
+        transition={{
+          duration: 28,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+        className="absolute -bottom-20 right-1/4 w-[500px] h-[500px] bg-brand-secondary/5 rounded-full blur-3xl"
+      />
+    </div>
+  );
+};
+
 const LandingPage = ({ onStart, onLogin, darkMode, setDarkMode }: { onStart: () => void, onLogin: () => void, darkMode: boolean, setDarkMode: (val: boolean) => void }) => {
   return (
-    <div className="min-h-screen bg-bg-main">
+    <div className="min-h-screen bg-bg-main relative overflow-hidden">
+      <BackgroundBubbles />
+      
       {/* Navigation */}
-      <nav className="flex items-center justify-between px-8 py-4 border-b border-slate-200 dark:border-slate-800">
+      <nav className="relative z-10 flex items-center justify-between px-8 py-4 border-b border-slate-200 dark:border-slate-800">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-brand-gradient rounded-lg flex items-center justify-center shadow-sm">
             <Activity className="text-white w-5 h-5" />
@@ -675,7 +736,7 @@ const LandingPage = ({ onStart, onLogin, darkMode, setDarkMode }: { onStart: () 
       </nav>
 
       {/* Hero Section */}
-      <section className="max-w-5xl mx-auto px-6 pt-24 pb-32 text-center">
+      <section className="relative z-10 max-w-5xl mx-auto px-6 pt-24 pb-32 text-center">
         <h1 className="text-5xl md:text-7xl font-bold text-text-primary mb-6 tracking-tight">
           Personal Vibe Marketing<br />
           <span className="bg-brand-gradient bg-clip-text text-transparent">
@@ -694,25 +755,25 @@ const LandingPage = ({ onStart, onLogin, darkMode, setDarkMode }: { onStart: () 
       </section>
 
       {/* Features Grid */}
-      <section className="max-w-7xl mx-auto px-6 pb-32 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <section className="relative z-10 max-w-7xl mx-auto px-6 pb-32 grid grid-cols-1 md:grid-cols-3 gap-8">
         {[
           {
             title: 'Content Generation',
             desc: 'Boost posts with Groq AI. Generate content and choose your favorites.',
             icon: Sparkles,
-            color: 'bg-brand-blue/10 text-brand-blue'
+            color: 'bg-brand-primary/10 text-brand-primary'
           },
           {
             title: 'Smart Scheduling',
             desc: 'Schedule posts for optimal engagement times. Set it and forget it with automated posting.',
             icon: Calendar,
-            color: 'bg-accent-blue/10 text-accent-blue'
+            color: 'bg-brand-secondary/10 text-brand-secondary'
           },
           {
             title: 'Analytics & Insights',
             desc: 'Track engagement, measure performance, and optimize your content strategy with detailed analytics.',
             icon: BarChart,
-            color: 'bg-brand-blue-light/10 text-brand-blue-light'
+            color: 'bg-brand-primary/10 text-brand-primary'
           }
         ].map((feature) => (
           <div key={feature.title} className="bg-surface p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
