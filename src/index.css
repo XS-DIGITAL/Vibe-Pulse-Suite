@@ -18,8 +18,10 @@
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
 
-  @variant dark {
+@layer base {
+  .dark {
     --color-bg-main: #0f172a;
     --color-surface: #1e293b;
     --color-surface-hover: #334155;
